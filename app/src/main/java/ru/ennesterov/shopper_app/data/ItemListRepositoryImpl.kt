@@ -14,10 +14,8 @@ object ItemListRepositoryImpl: ItemListRepository {
     private var autoIncrementId = 0
 
     init {
-        for (i in 0..30) {
-            val item = Item("Something", i, Random.nextBoolean())
+            val item = Item("hello", 0, Random.nextBoolean())
             addItem(item)
-        }
     }
 
     override fun getItemsList(): LiveData<List<Item>> {
