@@ -22,7 +22,7 @@ class ItemListAdapter: ListAdapter<Item, ItemViewHolder>(ItemDiffCallback()) {
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = getItem(position)
-        holder.itemHeader.text = item.id.toString()
+        holder.itemHeader.text = item.count.toString()
         holder.itemQuantity.text = item.name
         holder.view.setOnLongClickListener {
             onItemLongClickListener?.invoke(item)
@@ -38,8 +38,6 @@ class ItemListAdapter: ListAdapter<Item, ItemViewHolder>(ItemDiffCallback()) {
             R.layout.item_enabled
         else
             R.layout.item_disabled
-
-
 
     companion object {
 
