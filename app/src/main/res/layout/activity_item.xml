@@ -1,56 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.fragment.app.FragmentContainerView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".presentation.ItemActivity">
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/item_name_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="4dp">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/item_name_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#6FA6F8"
-            android:inputType="textCapWords"
-            android:hint="@string/item_name"/>
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/quantity_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="4dp">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/quantity_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#6FA6F8"
-            android:inputType="number"
-            android:hint="@string/quantity"/>
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <Button
-        android:id="@+id/apply_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/apply"
-        android:backgroundTint="#3963A2"
-        android:textAllCaps="false"
-        android:layout_marginTop="12dp"
-        android:layout_gravity="center" />
-
-</LinearLayout>
+    tools:context=".presentation.ItemActivity"
+    tools:layout="@layout/fragment_item" />

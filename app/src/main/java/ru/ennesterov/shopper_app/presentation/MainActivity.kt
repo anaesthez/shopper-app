@@ -1,21 +1,26 @@
 package ru.ennesterov.shopper_app.presentation
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentContainerView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import ru.ennesterov.shopper_app.R
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ItemFragment.OnEditingFinishedListener {
 
     private lateinit var viewModel: MainViewModel
     private lateinit var itemListAdapter: ItemListAdapter
+    private var itemContainer: FragmentContainerView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        itemContainer = findViewById(R.id.item_container)
         setupRecyclerView()
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         viewModel.itemList.observe(this) {
@@ -23,10 +28,22 @@ class MainActivity : AppCompatActivity() {
         }
         val addButton = findViewById<FloatingActionButton>(R.id.add_item_button)
         addButton.setOnClickListener {
-            val intent = ItemActivity.newIntentAddItem(this)
-            startActivity(intent)
+            if (itemContainer == null) {
+                val intent = ItemActivity.newIntentAddItem(this)
+                startActivity(intent)
+            } else {
+                launchFragment(ItemFragment.newInstanceAddItem())
+            }
         }
 
+    }
+
+    private fun launchFragment(fragment: Fragment) {
+        supportFragmentManager.popBackStack()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.item_container, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun setupRecyclerView() {
@@ -72,8 +89,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupClickListener() {
         itemListAdapter.onItemClickListener = {
-            val intent = ItemActivity.newIntentEditItem(this, it.id)
-            startActivity(intent)
+            if (itemContainer == null) {
+                val intent = ItemActivity.newIntentEditItem(this, it.id)
+                startActivity(intent)
+            } else {
+                launchFragment(ItemFragment.newInstanceEditItem(it.id))
+            }
         }
     }
 
@@ -83,4 +104,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onEditingFinished() {
+        Toast.makeText(this@MainActivity, "Success", Toast.LENGTH_SHORT).show()
+        supportFragmentManager.popBackStack()
+    }
 }
